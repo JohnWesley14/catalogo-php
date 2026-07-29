@@ -14,8 +14,13 @@ switch ($action) {
         require __DIR__ . '/../src/Views/products/create.php';
         break;
     case 'store':
-        // -> É ESTE CARA AQUI QUE RECEBE O SEU FORMULÁRIO:
         $controller->store();
+        break;
+    case 'edit': // <--- NOVO
+        $controller->edit();
+        break;
+    case 'update': // <--- NOVO
+        $controller->update();
         break;
     case 'index':
     default:

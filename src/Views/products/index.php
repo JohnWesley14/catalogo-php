@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Catálogo de Produtos</title>
 </head>
+
 <body>
     <h1>Lista de Produtos</h1>
     <a href="index.php?action=create">Adicionar Novo Produto</a>
@@ -19,10 +21,15 @@
         </thead>
         <tbody>
             <?php if (empty($produtos)): ?>
-                <tr><td colspan="4">Nenhum produto cadastrado.</td></tr>
+                <tr>
+                    <td colspan="4">Nenhum produto cadastrado.</td>
+                </tr>
             <?php else: ?>
                 <?php foreach ($produtos as $p): ?>
                     <tr>
+                        <td>
+                            <a href="index.php?action=edit&id=<?= $p['id'] ?>">Editar</a>
+                        </td>
                         <td><?= htmlspecialchars($p['id']) ?></td>
                         <td><?= htmlspecialchars($p['nome']) ?></td>
                         <td>R$ <?= number_format($p['preco'], 2, ',', '.') ?></td>
@@ -33,4 +40,5 @@
         </tbody>
     </table>
 </body>
+
 </html>
