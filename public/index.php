@@ -6,7 +6,7 @@ use App\Controllers\ProductController;
 
 $controller = new ProductController();
 
-// Um roteamento básico via parâmetro URL `?action=` ou URI simples
+// Pega o "action=" da URL (se não tiver nada, assume 'index')
 $action = $_GET['action'] ?? 'index';
 
 switch ($action) {
@@ -14,6 +14,7 @@ switch ($action) {
         require __DIR__ . '/../src/Views/products/create.php';
         break;
     case 'store':
+        // -> É ESTE CARA AQUI QUE RECEBE O SEU FORMULÁRIO:
         $controller->store();
         break;
     case 'index':

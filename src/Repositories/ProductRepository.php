@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Database\Connection;
+use App\Models\Product;
 use PDO;
 
 class ProductRepository
@@ -18,7 +19,7 @@ class ProductRepository
         return $stmt->fetchAll();
     }
 
-    public function create(array $data): bool{
+    public function create(Product $product): bool{
         // Query limpa, sem o campo imagem
         $sql = "INSERT INTO produtos (nome, descricao, preco, quantidade) 
                 VALUES (:nome, :descricao, :preco, :quantidade)";
@@ -26,10 +27,10 @@ class ProductRepository
         $stmt = $this->db->prepare($sql);
         
         return $stmt->execute([
-            ':nome'       => $data['nome'],
-            ':descricao'  => $data['descricao'],
-            ':preco'      => $data['preco'],
-            ':quantidade' => $data['quantidade']
+            ':nome'       => $product->getNome(),
+            ':descricao'  => $product->getDescricao(),
+            ':preco'      => $product->getPreco(),
+            ':quantidade' => $product->getQuantidade()
         ]);
     }
 }
