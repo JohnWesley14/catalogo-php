@@ -1,0 +1,8 @@
+{
+    "name": "meu-nome/catalogo-php",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
