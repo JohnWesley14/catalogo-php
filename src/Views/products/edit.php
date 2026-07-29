@@ -1,3 +1,6 @@
+<?php
+/** @var App\Models\Product $produto */
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>

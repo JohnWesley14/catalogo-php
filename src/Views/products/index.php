@@ -27,13 +27,13 @@
             <?php else: ?>
                 <?php foreach ($produtos as $p): ?>
                     <tr>
-                        <td>
-                            <a href="index.php?action=edit&id=<?= $p['id'] ?>">Editar</a>
-                        </td>
                         <td><?= htmlspecialchars($p['id']) ?></td>
                         <td><?= htmlspecialchars($p['nome']) ?></td>
                         <td>R$ <?= number_format($p['preco'], 2, ',', '.') ?></td>
                         <td><?= htmlspecialchars($p['quantidade']) ?></td>
+                        <td>
+                            <a href="index.php?action=edit&id=<?= $p['id'] ?>">Editar</a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             <?php endif; ?>
