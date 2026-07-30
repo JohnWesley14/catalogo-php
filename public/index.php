@@ -3,8 +3,10 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use App\Controllers\ProductController;
+use App\Controllers\AuthController;
 
-$controller = new ProductController();
+$controllerProduct = new ProductController();
+$controllerAuth= new AuthController();
 
 // Pega o "action=" da URL (se não tiver nada, assume 'index')
 $action = $_GET['action'] ?? 'index';
@@ -13,23 +15,26 @@ switch ($action) {
     case 'create':
         require __DIR__ . '/../src/Views/products/create.php';
         break;
+    case 'login':
+        $controllerAuth->login();
+        break;
     case 'store':
-        $controller->store();
+        $controllerProduct->store();
         break;
     case 'edit':
-        $controller->edit();
+        $controllerProduct->edit();
         break;
     case 'update':
-        $controller->update();
+        $controllerProduct->update();
         break;
     case 'delete':
-        $controller->delete();
+        $controllerProduct->delete();
         break;
     // ---> SE ESTE BLOCO FALTAR, O SISTEMA SEMPRE CHAMARÁ O INDEX() <---
     case 'search':
-        $controller->search();
+        $controllerProduct->search();
         break;
     default:
-        $controller->index();
+        $controllerProduct->index();
         break;
 }
