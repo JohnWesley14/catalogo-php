@@ -43,20 +43,21 @@ class ProductController
             }
         }
     }
-    public function update(){
-        if($_SERVER['REQUEST_METHOD'] == "POST"){
+    public function update()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
             $nome       = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
             $descricao  = filter_input(INPUT_POST, 'descricao', FILTER_SANITIZE_SPECIAL_CHARS);
             $preco      = filter_input(INPUT_POST, 'preco', FILTER_VALIDATE_FLOAT);
             $quantidade = filter_input(INPUT_POST, 'quantidade', FILTER_VALIDATE_INT);
 
-            if($id && $nome && $preco !== false ){
+            if ($id && $nome && $preco !== false) {
                 $produto = new Product(
                     id: $id,
                     nome: $nome,
                     descricao: $descricao ?: '',
-                    preco: $preco, 
+                    preco: $preco,
                     quantidade: $quantidade ?: 0
                 );
                 $this->repository->update($produto);
@@ -77,7 +78,6 @@ class ProductController
         }
 
         // 2. AQUI ESTÁ AS COMPANHIAS: Buscamos o item no banco usando o findById
-        // Isso cria a variável $produto (que é um objeto da classe Product)
         $produto = $this->repository->findById($id);
 
         if (!$produto) {
@@ -88,5 +88,31 @@ class ProductController
         // 3. Ao fazer o "require" abaixo, o arquivo edit.php HERDA e enxerga 
         // a variável $produto que acabamos de criar na linha de cima!
         require __DIR__ . '/../Views/products/edit.php';
+    }
+    public function delete()
+    {
+        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+
+        if ($id) {
+            $this->repository->delete($id);
+        }
+        header('Location: index.php?action=index');
+        exit;
+    }
+    public function search(): void
+    {
+        // 1. Pega o termo digitado na URL
+        $termo = filter_input(INPUT_GET, 'termo', FILTER_SANITIZE_SPECIAL_CHARS);
+
+        if ($termo) {
+            // 2. Salva o resultado na variável $produtos
+            $produtos = $this->repository->search($termo);
+        } else {
+            // Se enviou a busca em branco, traz todos
+            $produtos = $this->repository->findAll();
+        }
+
+        // 3. CARREGA A VIEW! Sem essa linha, a tela não atualiza com a busca.
+        require __DIR__ . '/../Views/products/index.php';
     }
 }

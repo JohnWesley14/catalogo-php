@@ -10,22 +10,25 @@ class ProductRepository
 {
     private PDO $db;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->db = Connection::get();
     }
 
-    public function findAll(): array{
+    public function findAll(): array
+    {
         $stmt = $this->db->query("SELECT * FROM produtos ORDER BY id DESC");
         return $stmt->fetchAll();
     }
 
     // preencher o formulário de edição na tela antes de o usuário alterar qualquer coisa. Para ficar melhor pro user
-    public function findById(int $id){
+    public function findById(int $id)
+    {
         $stmt = $this->db->prepare("SELECT * FROM produtos where id = :id");
         $stmt->execute([':id' => $id]);
 
         $row = $stmt->fetch();
-        if(!$row){
+        if (!$row) {
             return null;
         }
         return new Product(
@@ -36,13 +39,14 @@ class ProductRepository
             quantidade: (int)$row['quantidade']
         );
     }
-    public function create(Product $product): bool{
+    public function create(Product $product): bool
+    {
         // Query limpa, sem o campo imagem
         $sql = "INSERT INTO produtos (nome, descricao, preco, quantidade) 
                 VALUES (:nome, :descricao, :preco, :quantidade)";
-        
+
         $stmt = $this->db->prepare($sql);
-        
+
         return $stmt->execute([
             ':nome'       => $product->getNome(),
             ':descricao'  => $product->getDescricao(),
@@ -50,7 +54,8 @@ class ProductRepository
             ':quantidade' => $product->getQuantidade()
         ]);
     }
-    public function update(Product $product){
+    public function update(Product $product)
+    {
         $sql = "UPDATE produtos SET nome = :nome, descricao = :descricao, preco = :preco, quantidade = :quantidade WHERE id = :id";
         $stmt = $this->db->prepare($sql);
 
@@ -61,5 +66,25 @@ class ProductRepository
             ':quantidade' => $product->getQuantidade(),
             ':id'         => $product->getId()
         ]);
+    }
+    public function delete(int $id)
+    {
+        $sql = "DELETE FROM produtos where id = :id";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([':id' => $id]);
+    }
+    public function search(string $termo)
+    {
+        // Adiciona um asterisco no final para buscar palavras parciais (ex: "mous*" acha "Mouse")
+        $termoFormatado = trim($termo) . '*';
+
+        $sql = "SELECT * FROM produtos 
+                WHERE MATCH(nome, descricao) AGAINST(:termo IN BOOLEAN MODE) 
+                ORDER BY id DESC";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([":termo" => $termoFormatado]);
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

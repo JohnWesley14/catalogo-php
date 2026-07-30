@@ -16,13 +16,19 @@ switch ($action) {
     case 'store':
         $controller->store();
         break;
-    case 'edit': // <--- NOVO
+    case 'edit':
         $controller->edit();
         break;
-    case 'update': // <--- NOVO
+    case 'update':
         $controller->update();
         break;
-    case 'index':
+    case 'delete':
+        $controller->delete();
+        break;
+    // ---> SE ESTE BLOCO FALTAR, O SISTEMA SEMPRE CHAMARÁ O INDEX() <---
+    case 'search':
+        $controller->search();
+        break;
     default:
         $controller->index();
         break;
