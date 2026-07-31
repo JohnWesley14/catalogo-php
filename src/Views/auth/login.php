@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="">
+    <form method="post">
         <input type="text" name="nome" id="" placeholder="nome">
         <input type="text" name="senha" id="" placeholder="senha">
         <input type="submit" value="enviar">
