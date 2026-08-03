@@ -27,10 +27,18 @@
         </div>
     <?php endif; ?>
     
-    <form action="index.php?action=login" method="POST">
-        <input type="email" name="email" id="" placeholder="email">
-        <input type="text" name="senha" id="" placeholder="senha">
-        <input type="submit" value="cadastrar">
+    <form action="index.php?action=authenticate" method="POST">
+        <div>
+            <label for="email">E-mail:</label>
+            <input type="email" name="email" id="email" required>
+        </div>
+
+        <div>
+            <label for="senha">Senha:</label>
+            <input type="password" name="senha" id="senha" required>
+        </div>
+
+        <button type="submit">Entrar</button>
     </form>
 </body>
 </html>

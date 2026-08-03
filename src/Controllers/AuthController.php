@@ -46,6 +46,31 @@ class AuthController{
             exit();
         }
     }
+    public function authenticate(){
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+        $senha = $_POST['senha'];
+
+        if(!empty($senha) && !empty($email)){
+            $usuario = $this->repository->findByEmail($email);
+            if($usuario && $usuario['senha'] == $senha){
+                if(session_status() === PHP_SESSION_NONE){
+                    session_start();
+                }
+                $_SESSION['user_id'] = $usuario['id'];
+                $_SESSION['user_nome'] = $usuario['nome'];
+                $_SESSION['user_email'] = $usuario['email'];
+
+                header("Location: index.php?action=index");
+                exit();
+            }else{
+                header("Location: index.php?action=login&erro=1");
+                exit();
+            }
+        }else{
+            header("Location: index.php?action=login&erro=1");
+            exit();
+        }
+    }
 }
 
 

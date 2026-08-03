@@ -24,6 +24,9 @@ switch ($action) {
     case 'login':
         $controllerAuth->login();
         break;
+    case 'authenticate': 
+        $controllerAuth->authenticate();
+        break;
     case 'store':
         $controllerProduct->store();
         break;
