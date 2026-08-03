@@ -29,3 +29,4 @@ $erro = $_GET['erro'] ?? null;
 
     <button type="submit">Cadastrar</button>
 </form>
+    <p>Já tem uma conta? <a href="index.php?action=login">Faça login aqui</a></p>

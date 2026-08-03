@@ -40,6 +40,7 @@
 
         <button type="submit">Entrar</button>
     </form>
+    <p>Não tem uma conta? <a href="index.php?action=register">Registre-se aqui</a></p>
 </body>
 </html>
 <?php ?>

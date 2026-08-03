@@ -16,6 +16,15 @@ class ProductController
 
     public function index(): void
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Se NÃO existir a chave user_id na sessão, manda para o login
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit();
+        }
         $produtos = $this->repository->findAll();
         require __DIR__ . '/../Views/products/index.php';
     }

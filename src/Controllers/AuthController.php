@@ -22,6 +22,7 @@ class AuthController{
             $nome  = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
             $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
             $senha = $_POST['senha'] ?? '';
+            $senha = password_hash($senha, PASSWORD_BCRYPT);
 
             // 1. Verifica se todos os campos estão preenchidos
             if (!empty($nome) && !empty($email) && !empty($senha)) {
@@ -52,7 +53,7 @@ class AuthController{
 
         if(!empty($senha) && !empty($email)){
             $usuario = $this->repository->findByEmail($email);
-            if($usuario && $usuario['senha'] == $senha){
+           if ($usuario && password_verify($senha, $usuario['senha'])){
                 if(session_status() === PHP_SESSION_NONE){
                     session_start();
                 }
