@@ -19,12 +19,21 @@ class UserRepository
         $stmt->execute(["email" => $email]);
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
-    public function login(User $user){
-        $sql = "INSERT INTO usuarios SET nome = :nome, senha = :senha";
+    public function save(User $user)
+{
+    $sql = "INSERT INTO usuarios (nome, email, senha) VALUES (:nome, :email, :senha)";
+    
+    try {
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([
-            ":nome" => $user->getNome(),
+            ":nome"  => $user->getNome(),
+            ":email" => $user->getEmail(),
             ":senha" => $user->getSenha()
         ]);
+    } catch (\PDOException $e) {
+        // Se o MySQL reclamar de algo, vai aparecer em vermelho na tela:
+        die("Erro no MySQL: " . $e->getMessage() . "");
     }
+}
+    
 }
