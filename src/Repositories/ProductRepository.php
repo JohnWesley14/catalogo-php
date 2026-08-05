@@ -64,4 +64,17 @@ class ProductRepository
             ":id" => $id
         ]);
     }
+    public function findByName(string $termo){
+
+        $termo =  trim($termo) . '*';
+          $sql = "SELECT * FROM produtos 
+                WHERE MATCH(nome, descricao) AGAINST(:termo IN BOOLEAN MODE) 
+                ORDER BY id DESC";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([
+            ":termo" => $termo 
+        ]);
+        return  $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

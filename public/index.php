@@ -25,6 +25,9 @@ switch ($action) {
     case 'delete':
         $controllerProduct->delete();
         break;
+    case 'search':
+        $controllerProduct->search();
+        break;
     default:
         $controllerProduct->index();
         break;

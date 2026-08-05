@@ -76,4 +76,10 @@ class ProductController
         exit();
 
     }
+    public function search(){
+        $termo = filter_input(INPUT_GET, "termo", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        $produtos = $this->repository->findByName($termo);
+        require __DIR__ . "/../Views/products/index.php";
+    }
 }
