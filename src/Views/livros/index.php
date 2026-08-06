@@ -24,9 +24,10 @@
                 <?php foreach ($produtos as $p): ?>
                     <tr>
                         <td><?= htmlspecialchars($p['id']) ?></td>
-                        <td><?= htmlspecialchars($p['nome']) ?></td>
-                        <td>R$ <?= number_format($p['preco'], 2, ',', '.') ?></td>
-                        <td><?= htmlspecialchars($p['quantidade']) ?></td>
+                        <td><?= htmlspecialchars($p['titulo']) ?></td>
+                        <td>R$ <?= htmlspecialchars($p['titulo']) ?></td>
+                        <td>R$ <?= htmlspecialchars($p['status']) ?></td>
+                        <td>R$ <?= htmlspecialchars($p['nota']) ?></td>
                     </tr>
                 <?php endforeach; ?>
             <?php endif; ?>
