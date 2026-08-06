@@ -3,9 +3,10 @@
 namespace App\Repositories;
 
 use App\Database\Connection;
+use App\Models\Livro;
 use PDO;
 
-class ProductRepository
+class LivroRepository
 {
     private PDO $db;
 
@@ -14,10 +15,43 @@ class ProductRepository
     }
 
     public function findAll(){
-        
+        $sql = "SELECT id, titulo, autor, status, nota FROM livros";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function create(array $data){
-      
+    public function create(Livro $livro){
+      $sql = "INSERT INTO livros (titulo, autor, status, nota) VALUES (:titulo, :autor, :status, :nota)";
+    
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([
+            ':titulo' => $livro->getTitulo(),
+            ':autor'  => $livro->getAutor(),
+            ':status' => $livro->getStatus(),
+            ':nota'   => $livro->getNota()
+        ]);
+    }
+    public function findById(int $id){
+        $sql = "SELECT id, titulo, autor, status, nota FROM livros WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(["id" => $id]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public function update(Livro $livro): bool
+    {
+        $sql = "UPDATE livros 
+                SET titulo = :titulo, autor = :autor, status = :status, nota = :nota 
+                WHERE id = :id";
+
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([
+            ':id'     => $livro->getId(),
+            ':titulo' => $livro->getTitulo(),
+            ':autor'  => $livro->getAutor(),
+            ':status' => $livro->getStatus(),
+            ':nota'   => $livro->getNota()
+        ]);
     }
 }

@@ -13,7 +13,7 @@ class Connection
     {
         if (self::$instance === null) {
             $host = '127.0.0.1';
-            $db   = 'catalogo_db';
+            $db   = 'biblioteca';
             $user = 'root'; // seu usuário do banco
             $pass = '12345678';     // sua senha do banco
 
