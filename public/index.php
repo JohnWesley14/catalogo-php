@@ -20,6 +20,8 @@ switch ($action) {
         $controller->edit();
         break;
     case 'index':
+    case 'register':
+        $controller->register();
     default:
         $controller->index();
         break;

@@ -4,19 +4,21 @@ namespace App\Models;
 class Livro
 {
     private ?int $id;
+    private ?int $userId;
     private string $titulo;
     private string $autor;
     private string $status;
     private ?string $createdAt;
-    private string $nota;
+    private ?int $nota;
 
     public function __construct(
         ?int $id = null,
+        ?int $userId = null, 
         string $titulo = '',
         string $autor = '',
         string $status = 'quero_ler',
         ?string $createdAt = null,
-        ?int $nota = null
+        ?int $nota = null,
     ) {
         $this->id = $id;
         $this->titulo = $titulo;
@@ -24,6 +26,7 @@ class Livro
         $this->status = $status;
         $this->createdAt = $createdAt;
         $this->nota = $nota;
+        $this->userId = $userId;
     }
 
     // Getters
@@ -54,5 +57,8 @@ class Livro
     public function getNota(): ?int 
     { 
         return $this->nota; 
+    }
+    public function getUserId(){
+        return $this->userId;
     }
 }

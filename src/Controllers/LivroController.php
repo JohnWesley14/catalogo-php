@@ -27,15 +27,17 @@ class LivroController
             $autor = filter_input(INPUT_POST, "autor", FILTER_SANITIZE_SPECIAL_CHARS);
             $status = filter_input(INPUT_POST, "status", FILTER_SANITIZE_SPECIAL_CHARS);
             $nota = filter_input(INPUT_POST, "nota", FILTER_SANITIZE_SPECIAL_CHARS);
+            $userId = 1;
 
             $livro = new Livro(
                 titulo: $titulo,
                 autor: $autor,
                 status: $status,
                 nota: $nota,
+                userId: $userId,
             );
+            var_dump($livro);
             $livro = $this->repository->create($livro);
-            //  var_dump($livro);
             header("Location: index.php?action=index");
             exit();
         };
@@ -46,6 +48,9 @@ class LivroController
         $this->repository->update($id);
 
         require __DIR__ . '/../Views/livros/index.php?action=edit';
+    }
+    public function register(){
+        
     }
     //Falta fazer a func que recebe os dados do 
     

@@ -22,14 +22,15 @@ class LivroRepository
     }
 
     public function create(Livro $livro){
-      $sql = "INSERT INTO livros (titulo, autor, status, nota) VALUES (:titulo, :autor, :status, :nota)";
+      $sql = "INSERT INTO livros (titulo, user_id, autor, status, nota) VALUES (:titulo, :user_id, :autor, :status, :nota )";
     
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([
             ':titulo' => $livro->getTitulo(),
+            ':user_id'=> $livro->getUserId(),
             ':autor'  => $livro->getAutor(),
             ':status' => $livro->getStatus(),
-            ':nota'   => $livro->getNota()
+            ':nota'   => $livro->getNota(),
         ]);
     }
     public function findById(int $id){
