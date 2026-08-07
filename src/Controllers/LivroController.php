@@ -49,9 +49,14 @@ class LivroController
 
         require __DIR__ . '/../Views/livros/index.php?action=edit';
     }
-    public function register(){
-        
+    public function register()
+    {
+        require __DIR__ . '/../Views/auth/register.php';
+    }
+    public function login()
+    {
+        require __DIR__ . '/../Views/auth/login.php';
     }
     //Falta fazer a func que recebe os dados do 
-    
+
 }
